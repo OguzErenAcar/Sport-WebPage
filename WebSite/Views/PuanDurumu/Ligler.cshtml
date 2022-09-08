@@ -1,0 +1,106 @@
+﻿@model int;
+
+<div class="  bg " id="test">
+    <div class=" row">
+
+        <div class="col-8  mt-5">
+
+            <div class="container-fluid position-relative puantablo_container ">
+
+                <table class="table  table-hover table-sm">
+                    <thead class=" bg-warning">
+                        <tr>
+                            <th scope="col">Sıra</th>
+                            <th scope="col">Takımlar</th>
+                            <th scope="col">O</th>
+                            <th scope="col">G</th>
+                            <th scope="col">B</th>
+                            <th scope="col">M</th>
+                            <th scope="col">A</th>
+                            <th scope="col">Y</th>
+                            <th scope="col">Av.</th>
+                            <th scope="col">Puan</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class=" table-dark">
+
+                        <tr v-for="item in veriler">
+                            <td scope="row">{{item.rank}}</td>
+                            <td scope="row">{{item.team.name}}</td>
+                            <td>{{item.all.played}}</td>
+                            <td>{{item.all.win}}</td>
+                            <td>{{item.all.draw}}</td>
+                            <td>{{item.all.lose}}</td>
+                            <td>{{item.all.goals.for}}</td>
+                            <td>{{item.all.goals.against}}</td>
+                            <td>{{item.goalsDiff}}</td>
+                            <td>{{item.points}}</td>
+                        </tr>
+          
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="col-4">
+
+        </div>
+    </div>
+
+</div>
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+<script>
+
+    const options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/standings',
+        params: { season: '2020', league: '@Model' },
+        headers: {
+            'x-rapidapi-key': '8370d9e021msh7f958074248e43cp1de392jsn1f21f57cf161',
+            'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+        }
+    };
+    var etuogr = new Vue({
+        el: "#test",
+        data: {
+            veriler: null,  
+            },
+        
+
+        mounted: function () {
+            this.getirVeriler();
+        },
+        methods: {
+            getirVeriler: function () {
+                var vm = this;
+                axios.request(options).then((res) => {
+                    vm.veriler = res.data.response;
+                    console.log("deneme" + res.data);
+                    console.log(vm.veriler);
+                    for (item of vm.veriler) {
+                        vm.veriler = item;
+                        for (var item2 in vm.veriler) {
+                            vm.veriler = vm.veriler[item2];
+                            for (var item3 in vm.veriler) {
+                                if (item3 == "standings") {
+                                    vm.veriler = vm.veriler[item3];
+                                    for (var item4 of vm.veriler) {
+                                        vm.veriler = item4;
+                                        console.log(vm.veriler);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }).catch(function (error) {
+                    console.error(error);
+                });
+            }
+        }
+    })
+</script>

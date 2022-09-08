@@ -1,0 +1,94 @@
+﻿
+
+@model IEnumerable<WebSite.Models.Katagori>;
+@{ var id = 1;
+    if (Model.Any())
+    {
+        id = Model.OrderByDescending(a => a.id).FirstOrDefault().id + 1;
+    }
+    
+
+}
+<tr id="menuekle">
+    <td>
+        Ekle:
+    </td>
+    <td>
+        <input type="text" placeholder="yeni isim" v-model="veriler.katagori">
+    </td>
+    <td>
+        <div class="form-check">
+
+            <select data-val="true" data-val-number=" " v-model="veriler.Parentid" name="id">
+                <!--dropdown-->
+                {
+                <option value="">Katagori seç</option>
+                }
+                @foreach (var item in Model.Where(a => a.Parentid == null))
+                {<!-- tüm list yaz -->
+
+                    <option value="@item.id">@item.katagori</option>
+
+                }
+            </select>
+        </div>
+    </td>
+    <td>
+        <input type="text" v-model="veriler.Link" placeholder="yeni isim">
+    </td>
+    <td>
+        <div class="form-check">
+            <!----><input class="form-check-input" type="checkbox" v-model="veriler.Aktifmi" id="">
+        </div>
+    </td>
+    <td>
+
+        <button type="button" class="btn btn-info btn-sm mybtn" id=" " v-on:click="kaydet">Kaydet</button>
+    </td>
+</tr>
+
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+
+<script>
+
+    new Vue({
+        el: "#menuekle",
+        data: {
+            veriler: {
+                id: @id,
+             },
+            i:0,
+        },
+        methods:{
+            kaydet: function () {
+                var vm = this;
+                vm.veriler.Parentid = parseInt(vm.veriler.Parentid);
+                console.log(vm.veriler.id);
+                console.log(vm.veriler.katagori);
+                console.log(vm.veriler.Parentid);
+                console.log(vm.veriler.Link);
+                console.log(vm.veriler.Aktifmi);
+                axios.post("MenuKaydet", vm.veriler).then(function (res) {
+                    alert(res.data.message);
+                    location.href = "MenuY";
+                    }).catch(function (error) {
+                        alert(error.data.message)
+
+                    });
+                }
+
+            }
+
+            } );
+
+
+
+
+
+
+
+
+</script>
+
+

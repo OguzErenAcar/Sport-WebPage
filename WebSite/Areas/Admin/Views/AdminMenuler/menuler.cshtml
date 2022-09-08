@@ -1,0 +1,162 @@
+﻿
+@model IEnumerable<WebSite.Models.Katagori>;
+
+@foreach (var item in Model)
+{
+
+    string app = "app" + item.id;
+    string id1 = "flexCheckIndeterminate1" + item.id;
+    string id2 = "flexCheckIndeterminate2" + item.id;
+    string id3 = "flexCheckIndeterminate3" + item.id;
+    string mybtn = "mybt1" + item.id;
+    string mybtn1 = "mybtn1" + item.id;
+    string mybtn2 = "mybtn2" + item.id;
+    string yeniad = "yeniad" + item.id;
+    string selectbox = "selectbox" + item.id;
+
+
+
+
+
+        <tr id=@app>
+            <td>
+                @item.id;
+            </td>
+            <td>
+                <h6>@item.katagori</h6>
+                <input type="text" id="@yeniad" v-model="veriler.katagori" placeholder="yeni isim" disabled>
+            </td>
+            <td>
+                <div class="form-check">
+                        <!-- checkbox--><input class="form-check-input"  v-on:change="altmenu($event)"  type="checkbox" v-model="veriler.Parentid" id="@id1" disabled>
+
+                                        <select data-val="true" data-val-number=" " id="@selectbox" v-model="veriler.Parentid" name="id" disabled>
+                                            <!--dropdown-->
+                                            @if(item.Parentid != null ) {<!--alt başlıksa ilk üst baslığını yaz -->
+                                                <option value="@item.id"> @Model.Where(a => a.id == item.Parentid).FirstOrDefault().katagori</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="">Katagori seç</option>
+                                            }
+                                            @foreach (var item2 in Model.Where(a => a.Parentid == null && a.id != item.id))
+                                            {<!-- tüm list yaz -->
+
+                                                    <option value="@item2.id">@item2.katagori</option>
+
+                                            }
+
+                                        </select>
+                </div>
+            </td>
+            <td>
+                <h6>@item.Link</h6>
+                <input type="text" id="@id3" v-model="veriler.Link" placeholder="yeni isim" disabled>
+            </td>
+            <td>
+                <div class="form-check">
+                    <!---->    <input class="form-check-input" type="checkbox" v-model="veriler.Aktifmi" id="@id2" disabled>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-info btn-sm mybtn" id="@mybtn" v-on:click="enable">Düzenle</button>
+                  <button type="button" class="btn btn-info btn-sm mybtn" id="@mybtn1"  v-on:click="sil"  disabled> Sil </button>
+                  <button type="button" class="btn btn-info btn-sm mybtn" id="@mybtn2" v-on:click="kaydet" disabled>Kaydet</button>
+            </td>
+        </tr>
+
+    <script src="~/vue/vue.js"></script>
+    <script src="~/axios/axios.js"></script>
+
+    <script>
+
+        new Vue({
+            el: '#app' +@item.id,
+            data: {
+                i: 0,
+                veriler: {
+                    id: "@item.id",
+                    Link: "",
+                    Aktifmi: "",
+                    katagori: "@item.katagori",
+                    Parentid: "@item.Parentid"
+                },
+
+
+
+            },
+            mounted: function () {
+
+                this.aktifmi();
+            },
+            methods: {
+                kaydet: function () {
+                    var vm = this;
+
+                    vm.veriler.id = parseInt(vm.veriler.id);
+                    vm.veriler.Parentid = parseInt(vm.veriler.Parentid);
+                    
+
+                    // tip dönüşümlerine dikkat et ..boolean ?
+                    axios.post("MenuKaydet", vm.veriler).then(function (res) {
+                        alert(res.data.message);
+                        location.href = "MenuY";
+
+                    }).catch(function (error) {
+                        alert(error.data.message)
+                        location.href = "MenuY";
+                    });
+
+
+
+                },
+                altmenu: function () {
+                    var vm = this;
+                    var bool = vm.veriler.Parentid;
+                    //doluysa
+                    if (bool != "") {
+                        //drop görünür
+                        document.getElementById("@selectbox").disabled = false;
+                    }
+
+                    else {
+                        vm.veriler.Parentid = null;
+                        document.getElementById("@selectbox").disabled = true;
+                    }
+                },
+
+                enable: function () {
+
+                    document.getElementById("@id1").disabled = false;
+                    document.getElementById("@id2").disabled = false;
+                    document.getElementById("@id3").disabled = false;
+                    document.getElementById("@mybtn1").disabled = false;
+                    document.getElementById("@mybtn2").disabled = false;
+                    document.getElementById("@mybtn").disabled = true;
+                    document.getElementById("@yeniad").disabled = false;
+                    this.altmenu();
+                },
+
+                aktifmi: function () {
+                    var aktfmi = ("@item.Aktifmi" === 'True');
+                    this.veriler.Aktifmi = aktfmi;
+
+                },
+                sil: function () {
+                    var vm = this;
+                    axios.get("Menusil/"+vm.veriler.id).then(function (res) {
+                        alert(res.data.message);
+                        location.href = "MenuY";
+                    }).catch(function (error) {
+                        alert(error.data.message);
+                        location.href = "MenuY";
+
+                    });
+                }
+            }
+
+        });
+
+
+    </script>
+}

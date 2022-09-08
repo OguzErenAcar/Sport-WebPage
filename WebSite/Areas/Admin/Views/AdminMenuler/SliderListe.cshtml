@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<WebSite.Models.Slider>;
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Slider Listesi / <a style="color:red;" >Slider </a></h3>
+        <ul class="panel-controls">
+            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <table class="table " id="sliderlist">
+            <thead>
+                <tr>
+                    <th>Eklenme Tarih</th>
+                    <th>Slider başlığı</th> 
+                    <th>Resim yolu </th> 
+                    <th style="width:200px">Araçlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>  @item.Eklenmetarihi</td>
+                        <td> @item.Baslik </td>
+                         <td>@item.Resim  </td>
+          
+                        <td>
+                            <button class="btn btn-info btn-sm" v-on:click=" Slidersil(@item.id)"> Sil  </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+
+<script>
+    new Vue({
+        el: "#sliderlist",
+        data: {
+        },
+        methods: {
+            Slidersil: function (id) {
+                var vm = this;
+                console.log("SliderSil/" + id);
+                axios.get("SliderSil/" + id,)
+                    .then(function (cevap) {
+                        alert(cevap.data.message);
+                        console.log(cevap.data);
+                        location.href = "SliderListe";
+
+                    }).catch(function (error) {
+                        alert(error.data.message)
+
+                    });
+
+
+            }
+        }
+    });
+
+
+</script>
+
+
+
+
+
+
+

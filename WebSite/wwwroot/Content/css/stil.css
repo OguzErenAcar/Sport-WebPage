@@ -1,0 +1,94 @@
+.bg-navbar{
+	background-color:#202020;
+}
+
+body,html{
+margin-top: 75px;
+background-color:#333533;
+}
+.bg-haberler{
+background-color: #F5E000;
+ }
+.bg-haber {
+	background-color: #f5cd00;
+}
+
+#ligler{
+ background-color: #E0B700;
+}
+.bg-footer{
+background-color:#D6D6D6;
+}
+.logo{
+margin-top: 10px;
+height: 60px;
+ 
+}
+
+
+.nav-link{
+	color:white;
+	font-size: 18px;
+	font-weight:bold;
+}
+
+
+
+.divider{
+  height:30px;
+	width:200px;
+}
+.genislik{
+	width: 98%;
+}
+ .crop {
+	 height: 160px;
+	object-fit: cover;
+ object-position: 100% 80;
+
+
+ }
+#haber_baslik  {
+font-family:  Helvetica, sans-serif;
+font-style: italic;
+color:white;
+
+}
+#haber_baslik:hover{
+	color:black;
+}
+
+.carousel-inner > .carousel-item > img, .carousel-inner > .carausel-item > a > img {
+	height: 400px;
+
+object-fit: cover;
+object-position: 50% 50%;
+}
+.liglogo{
+	height: 150px;
+}
+.bg {
+	background-image: url('stad.jpg');
+	height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.takimlogo {
+	width:40px;
+	 
+}
+
+
+.a {
+	width: 750px;
+}
+	@media (max-width: 767.98px) {
+			#maclartable{
+				display: none;
+		}
+		#ligler{
+				display: none;
+		}
+	}

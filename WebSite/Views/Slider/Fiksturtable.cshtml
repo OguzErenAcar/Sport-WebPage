@@ -1,0 +1,90 @@
+﻿
+<div class="col-4 ">
+    <div class="container mt-5   ">
+        <table id="tablo" class="table table-hover table-dark text-center ">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="5" class=" align-middle"> Milli Takım maçları</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td> </td>
+                    <td>Tarih</td>
+                    <td> </td>
+                    <td></td>
+                </tr>
+
+                <tr v-for="item in veriler">
+
+                    <td><img :src="  item.teams.home.logo  " class="img-fluid takimlogo " /> </td>
+                    <td><h6 style="font-size: 12px">{{ item.teams.home.name }}</h6></td>
+                    <td><h6 style="font-size: 12px">{{ item.fixture.date  }}</h6></td>
+                    <td><h6 style="font-size: 12px">{{ item.teams.away.name }}</h6></td>
+                    <td><img :src="  item.teams.away.logo " class="img-fluid takimlogo" /> </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+<script>
+
+
+    const options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
+        params: {
+            team: '777',
+            next: '5'
+        },
+        headers: {
+            'x-rapidapi-key': '8370d9e021msh7f958074248e43cp1de392jsn1f21f57cf161',
+            'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+        }
+    };
+    var Vue = new Vue({
+        el: '#tablo',
+        data: {
+            veriler: {
+
+            },
+
+            team1logo: "",
+            team1: "",
+            tarih: "",
+            team2: "",
+            team2: "",
+        },
+        mounted: function () {
+            this.axiosmth();
+        },
+        methods: {
+
+            axiosmth: function () {
+                var vm = this;
+                axios.request(options).then(function (response) {
+                    vm.veriler = response.data.response;
+                    for (var i = 0; i < response.data.response.length; i++) {
+
+                        response.data.response[i].fixture.date = response.data.response[i].fixture.date.substring(0, 10);
+                    }
+                    //  console.log(response.data.response);
+                }).catch(function (error) {
+                    console.error(error);
+                });
+            }
+
+        }
+
+
+    });
+
+
+
+</script>

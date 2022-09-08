@@ -1,0 +1,17 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+    var sonHaberler = (IEnumerable<WebSite.Models.Haberler>)ViewBag.sonHaberler;
+    var Sliderhaber = (IEnumerable<WebSite.Models.Slider>)ViewBag.Sliderhaber;
+
+}
+
+
+@await Html.PartialAsync("~/Views/Slider/Slider.cshtml", Sliderhaber)
+
+
+ 
+@await Html.PartialAsync("~/Views/Haber/Sonhaberler.cshtml", sonHaberler)
+
+

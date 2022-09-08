@@ -1,0 +1,58 @@
+﻿
+@model IEnumerable<WebSite.Models.Puandurumu>;
+
+<div class="  bg " >
+    <div class=" row">
+      
+        <div class="col-8  mt-5">
+            
+            <div class="container-fluid position-relative puantablo_container ">
+                 
+                <table class="table  table-hover table-sm">
+                    <thead class=" bg-warning">
+                        <tr >
+                            <th scope="col">Sıra</th>
+                            <th scope="col">Takımlar</th>
+                            <th scope="col">O</th>
+                            <th scope="col">G</th>
+                            <th scope="col">B</th>
+                            <th scope="col">M</th>
+                            <th scope="col">A</th>
+                            <th scope="col">Y</th>
+                            <th scope="col">Av.</th>
+                            <th scope="col">Puan</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class=" table-dark">
+                        @for (int i = 1; i < 22; i++)
+                        {@foreach (var item in Model.OrderByDescending(a => a.Puan).Skip(i - 1).Take(1))
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@item.Takimisim</td>
+                                    <td>@item.OynananMac</td>
+                                    <td>@item.Galibiyet</td>
+                                    <td>@item.Beraberlik</td>
+                                    <td>@item.Malubiyet</td>
+                                    <td>@item.AtilanGol</td>
+                                    <td>@item.YenilenGol</td>
+                                    <td>@item.Avaraj</td>
+                                    <td>@item.Puan</td>
+                                </tr>
+                            }
+
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+           
+        </div>
+
+        <div class="col-4">
+          
+        </div>
+    </div>
+ 
+</div>

@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<WebSite.Models.Katagori>;
+
+
+<nav class="navbar navbar-expand-lg   ms-3 my-3 pt-1 ">
+    <div class="container-fluid  ">
+
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icon-list "></span>
+        </button>
+
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto  mb-2 mb-lg-0 mt-2  ">
+                @{
+                    
+                }
+                @foreach (var item in Model)
+                {
+
+                    if (item.Parentid == null && Model.Where(a => a.Parentid == item.id).Any()   )
+                    {
+                        
+                        <li class="nav-item dropdown me-5">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">@item.katagori  </a>
+                            <ul class="dropdown-menu bg-navbar " aria-labelledby="navbarDropdown">
+                                @foreach (var item1 in Model.Where(a => a.Parentid == item.id))
+                                {
+                                    <li><a class="dropdown-item text-light"href="@item1.Link">@item1.katagori</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    else if (item.Parentid == null    )
+                    {
+                             
+                        <li class="nav-item me-5  ">
+                            <a class="nav-link active " aria-current="page" href="@item.Link">@item.katagori</a>
+                        </li>
+                    }
+                }
+
+            </ul>
+                        
+                    @*if (item.Parentid == null)
+                    { Sağ taraftan başlaması için 
+                        <ul class="navbar-nav ms-auto  mt-2 mb-lg-0 me-2 ">
+                            <li class="nav-item me-5 ">
+                                <a class="nav-link active " aria-current="page" href="#">@item.katagori</a>
+                            </li>
+                        </ul>
+                    }*@
+
+
+
+             
+        </div>
+    
+    </div>
+</nav>
+
+

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+@model IEnumerable<WebSite.Models.Haberler>;
+
+<div class="container-fluid  mt-3 pt-4  pb-5 bg-haberler">
+
+
+    <div class="row d-flex justify-content-center">
+        @for (int i = 0; i < 3; i++)
+        {
+
+        <div class="col-lg-3 col-md-8  ">
+            @foreach (var item in Model.OrderByDescending(a => a.Eklenmetarih).Skip(i).Take(1))
+            {
+
+            <div class=" h-50   bg-haber pt-4 ">
+                <img src="@item.Resimyolu" class=" img-fluid  w-75  crop d-block mx-auto pt-2  " alt="">
+                <img src="~/Content/img/divider3.png" class="img-fluid divider rounded mx-auto d-block" alt="">
+                <a class="text-decoration-none" href="/Haber/HaberDetay/@item.id">
+                    <h5 id="haber_baslik" class="text-center">@item.baslik.Substring(0,40)...</h5></a> 
+                
+            </div>
+        }
+            @foreach (var item in Model.OrderByDescending(a => a.Eklenmetarih).Skip(i+3).Take(1))
+            {
+        <div class=" h-50 bg-haber mt-4 pt-4 ">
+            <img src="@item.Resimyolu" class=" img-fluid  w-75  crop d-block mx-auto pt-2  " alt="">
+            <img src="~/Content/img/divider3.png" class="img-fluid divider rounded mx-auto d-block" alt="">
+            <a class="text-decoration-none" href="/Haber/HaberDetay/@item.id">
+                <h5 id="haber_baslik" class="text-center">@item.baslik.Substring(0, 40)... </h5>
+            </a>
+        </div>
+            }
+            </div>
+
+        }
+    </div>
+
+</div>

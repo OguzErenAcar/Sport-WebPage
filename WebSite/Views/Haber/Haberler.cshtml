@@ -1,0 +1,52 @@
+﻿@model int;
+
+
+<div id="haberler" class="py-5    ">
+    <div v-for="item in haberlist">
+        <div class="container pt-2 w-75">
+            <a v-bind:href="'/Haber/HaberDetay/'+item.id" class="text-decoration-none ">
+
+                <div class="row bg-dark  ">
+                    <div class="col-3 ms-5 align-self-center ">
+                        <img class="img-fluid   w-100 crop my-auto  d-flex" :src="item.resimyolu" alt="">
+                    </div>
+                    <div class="col-8    ">
+                        <div class="container-fluid mt-3">
+                            <h3 class="text-white ">{{item.baslik}} </h3>
+                            <p class="text-white ">{{item.icerik}} </p>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+        </div>
+    </div>
+</div>
+ 
+
+<script>
+    new Vue({
+        el: "#haberler",
+        data: {
+
+            haberlist: []
+        },
+        mounted: function () {
+            this.getnews();
+        },
+        methods: {
+            getnews: function () {
+                var vm = this;
+                $.ajax({ url: "/Haber/Getnews/@Model", method: "POST" })
+                    .done(function (data) {
+                        vm.haberlist = data.gelendata;
+                        for (var haber of vm.haberlist ) {
+                            haber.icerik = haber.icerik.substring(0,230)+"...";
+                        }
+
+                    });
+            }
+        }
+    });
+</script>
+

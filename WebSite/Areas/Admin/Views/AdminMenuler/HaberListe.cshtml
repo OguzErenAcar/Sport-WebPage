@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<WebSite.Models.Haberler>;
+ 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Haber Listesi / <a style="color:red;" >Haberler</a></h3>
+        <ul class="panel-controls">
+            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <table class="table " id="haberlist">
+            <thead>
+                <tr>
+                    <th>Eklenme Tarih</th>
+                    <th>Haber başlığı</th>
+                    <th>içerik</th>
+                    <th>Resim yolu </th>
+                    <th>Takım_no</th>
+                    <th style="width:200px">Araçlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                     
+                    <tr>
+                        <td>  @item.Eklenmetarih</td>
+                        <td> @item.baslik </td>
+                        @if (item.icerik.Length > 50)
+                        {
+                            <td> @item.icerik.Substring(0, 50)</td>
+                        }
+                        else
+                        {
+                            <td> @item.icerik</td>
+                        }
+
+                        <td>@item.Resimyolu  </td>
+                        <td> @item.Takimid </td>
+                        <td>
+                            <button class="btn btn-info btn-sm" v-on:click=" Habersil(@item.id)" > Sil  </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+
+<script>
+    new Vue({
+        el: "#haberlist",
+        data: { 
+        },
+        methods: {
+            Habersil: function (id) {
+                var vm = this;
+                console.log("HaberHaberSil/" + id);
+                axios.get("HaberSil/"+id,)
+                    .then(function (cevap) {
+                        alert(cevap.data.message);
+                        console.log(cevap.data);
+                        location.href = "HaberListe";
+                    }).catch(function (error) {
+                        alert(error.data.message)
+
+                    });
+
+
+            }
+        }
+    });
+
+
+</script>
+
+
+
+
+
+
+

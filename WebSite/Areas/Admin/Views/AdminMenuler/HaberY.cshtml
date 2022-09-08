@@ -1,0 +1,147 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrap">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="form-horizontal" id="haberCtrl">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Yeni Haber</strong> Ekle / <a style="color:red;" href="/Admin/IcerikYonetimi/IcerikListele">Geri</a></h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">Takım </label>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class=""></span></span>
+                                        <select data-val="true" v-on:change="onChange($event)" data-val-number=" " name="id">
+                                            <option value="12">Diğer</option>
+                                            <option value="8">Galatasaray</option>
+                                            <option value="9">Fenerbahce</option>
+                                            <option value="10">Besiktas</option>
+                                            <option value="11">Trabzonspor</option>
+                                            o
+                                        </select>
+                                    </div>
+                                    <span class="help-block"></span>
+                                </div> 
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">Resimli</label>
+                                <div class="col-md-6 col-xs-12">
+                                  
+
+                                    <input type="file" v-on:change="resimsrc($event)" id="resim" multiple>
+
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">Baslik</label>
+                                <div class="col-md-6 col-xs-12">
+                                    <input type="text" cols="80" v-model="haber.baslik">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">İçerik</label>
+                                <div class="col-md-6 col-xs-12">
+
+                                    <textarea class=" " rows="10" cols="80" name="Icerik" v-model="haber.icerik"></textarea>
+
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+
+
+                                @*<input type="file" id="myFile" name="myFile" />
+                                <a href="#" onclick="showFileName()">Show Name</a>
+                                <button type="button" v-on:click="haberpost2" id="asda">    </button>*@
+
+                        </div>
+
+                        <div class="panel-footer">
+                            <button class="btn btn-default">Temizle</button>
+
+                        </div>
+                        <button v-on:click="haberpost" type="button"  class="btn btn-primary pull-right">Kaydet</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/vue/vue.js"></script>
+<script src="~/axios/axios.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#haberCtrl",
+        data: {
+            haber: {
+                id: 0,
+                icerik: "",
+                baslik: "",
+                Resimyolu: "/Upload/Haberler/img/",
+                Takimid: 0,
+            }
+        
+        },
+        mounted: function () {
+            this.haberpost;
+            
+        },
+
+        
+        methods: {
+            resimsrc: function (event) {
+
+                this.haber.Resimyolu = this.haber.Resimyolu + event.target.files[0].name;
+            },
+            haberpost: function () {
+                var vm = this;
+                //var fil = document.getElementById("resim");
+                //vm.haber.Resimyolu = fil.value;
+                
+                //console.log(vm.haber);
+                
+                axios.post("HaberYonetimi", vm.haber)
+                    .then(function (cevap) {
+                        alert(cevap.data.message);
+                        console.log(cevap.data);
+
+                    }).catch(function (error) { 
+                        alert(error.data.message)
+
+                    });
+
+            },
+            
+            onChange: function (event) {
+                   
+                this.haber.Takimid = parseInt(event.target.value);
+                 
+                 console.log(this.haber.Takimid);
+            } 
+           
+
+
+            
+        }
+    })
+
+ 
+
+</script>
