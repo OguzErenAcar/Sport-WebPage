@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\oguze\\source\\repos\\WebSite\\WebSite\\WebSite.csproj": {}
+    "C:\\Users\\oguze\\source\\repos\\WebSite\\Spor-WebPage\\WebSite\\WebSite.csproj": {}
   },
   "projects": {
-    "C:\\Users\\oguze\\source\\repos\\WebSite\\WebSite\\WebSite.csproj": {
+    "C:\\Users\\oguze\\source\\repos\\WebSite\\Spor-WebPage\\WebSite\\WebSite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\oguze\\source\\repos\\WebSite\\WebSite\\WebSite.csproj",
+        "projectUniqueName": "C:\\Users\\oguze\\source\\repos\\WebSite\\Spor-WebPage\\WebSite\\WebSite.csproj",
         "projectName": "WebSite",
-        "projectPath": "C:\\Users\\oguze\\source\\repos\\WebSite\\WebSite\\WebSite.csproj",
+        "projectPath": "C:\\Users\\oguze\\source\\repos\\WebSite\\Spor-WebPage\\WebSite\\WebSite.csproj",
         "packagesPath": "C:\\Users\\oguze\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\oguze\\source\\repos\\WebSite\\WebSite\\obj\\",
+        "outputPath": "C:\\Users\\oguze\\source\\repos\\WebSite\\Spor-WebPage\\WebSite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\oguze\\AppData\\Roaming\\NuGet\\NuGet.Config",
